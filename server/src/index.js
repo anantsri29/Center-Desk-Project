@@ -74,6 +74,7 @@ async function start() {
     },
     { timezone: "Asia/Kolkata" },
   );
+  console.log("CLIENT_URL =", process.env.CLIENT_URL);
 
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
