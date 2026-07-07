@@ -18,13 +18,23 @@ import { refreshFeeStatuses } from "./utils/feeStatus.js";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://center-desk-project.vercel.app",
+  "https://center-desk-project-git-main-anant-narayan-srivastava.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://center-desk-project.vercel.app",
-      "https://center-desk-project-git-main-anant-narayan-srivastava.vercel.app",
-    ],
+    origin(origin, callback) {
+      console.log("Origin:", origin);
+
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }),
 );
